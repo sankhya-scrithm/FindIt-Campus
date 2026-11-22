@@ -1,50 +1,42 @@
-# FindIt — Smart Campus Lost & Found
+# FindIt – Smart Campus Lost & Found Management System
 
-A Java Spring Boot web application. Spring Boot serves the browser UI and REST API from one deployable service. Reports and claims are stored in a relational database; uploaded images are stored as database binary data.
+**Java Mini Project**
 
-## Run locally
+FindIt is a web-based campus lost-and-found management system designed to make reporting, discovering and reclaiming misplaced belongings easier and more organized.
 
-Requirements: Java 17+ and Maven 3.8+.
+## The Problem
 
-```bash
-mvn spring-boot:run
-```
+Lost belongings on campus are often reported through informal channels such as messaging groups, word of mouth and notice boards. These methods make it difficult to locate reports, track items and verify ownership.
 
-Open http://localhost:8080. The default local database is an H2 file database at `./data/findit`.
+## Our Solution
 
-To build a runnable JAR:
+FindIt provides a centralized platform where campus users can:
 
-```bash
-mvn clean package
-java -jar target/findit-campus-1.0.0.jar
-```
+- Report lost and found items.
+- Browse and search item reports.
+- Filter reports by category and status.
+- Upload photographs of items.
+- Submit ownership claims.
+- Allow authorized reviewers to manually evaluate claims.
 
-## Deploy on Railway
+## Technology Stack
 
-1. Push the contents of this folder to a GitHub repository.
-2. In Railway, create a project and choose **Deploy from GitHub repo**.
-3. Railway detects the Maven/Spring Boot project. Set the service start command if asked: `java -jar target/findit-campus-1.0.0.jar`.
-4. Add a Railway PostgreSQL database to the project.
-5. In the Java service, set these variables using the values shown in the PostgreSQL service's Connect/Variables panel:
-   - `SPRING_DATASOURCE_URL=jdbc:postgresql://${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/${{Postgres.PGDATABASE}}`
-   - `SPRING_DATASOURCE_USERNAME=${{Postgres.PGUSER}}`
-   - `SPRING_DATASOURCE_PASSWORD=${{Postgres.PGPASSWORD}}`
-   Replace `Postgres` in the variable references if your database service has a different name.
-6. Set `ADMIN_KEY` to a long, random secret. Do not use the sample default in a public deployment.
-7. Deploy, then open **Settings → Networking → Generate Domain**. Railway generates the public HTTPS URL.
-8. Open the generated URL and test: create a report with a photo, refresh, submit a claim, sign in to Review desk using the `ADMIN_KEY`, approve/reject the claim, and confirm handover.
+- **Backend:** Java, Spring Boot
+- **Frontend:** HTML, CSS, JavaScript
+- **Database:** H2 for local development; PostgreSQL planned for hosted deployment
+- **ORM:** Spring Data JPA, Hibernate
+- **Build Tool:** Apache Maven
+- **Version Control:** Git and GitHub
+- **Deployment:** Railway (deployment verification pending)
 
-Railway's dashboard labels can change. Follow the current UI if a menu has moved.
+## Ownership Verification
 
-## Deploy on Render (alternative)
+FindIt separates public item descriptions from private identifying details. Claims are submitted for manual review rather than automatically approved.
 
-Create a Web Service from the GitHub repository. Build command: `./mvnw clean package` if you add a Maven wrapper, otherwise `mvn clean package` (Render build environment must have Maven). Start command: `java -jar target/findit-campus-1.0.0.jar`. Add a managed PostgreSQL database and configure the same three datasource variables plus `ADMIN_KEY`. Configure a persistent database; do not rely on an ephemeral local filesystem for data.
+## Project Team
 
-## Security and project scope
+Five students are associated with this academic mini project. Individual responsibilities and technical contributions are documented separately.
 
-- Public listing responses do not expose the reporter's contact information or the report's private identifying detail.
-- Claim evidence and reporter contact details are available only through the admin-key-protected review endpoints.
-- A claim is never auto-approved. A reviewer must compare evidence and arrange a safe in-person handover.
-- The admin key is a simple shared-secret gate for a student demonstration, not a full institutional login system. It does not verify student identity, provide individual reviewer accounts, or provide audit-grade access control. Use a proper authentication/authorization system before real campus production use.
-- Do not upload passwords, government ID numbers, or other sensitive personal data. Keep public item photos free of private details.
-- For a real campus rollout, add verified institutional accounts, rate limiting, audit logs, CSRF protections where applicable, retention rules, moderation, and an agreed handover desk process.
+## Project Status
+
+The application has been built locally and its source code is available on GitHub. Cloud deployment and production database integration are undergoing verification.
