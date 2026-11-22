@@ -1,0 +1,13 @@
+target/
+data/
+.idea/
+*.iml
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+uploads/
+*.db
+*.sqlite
+*.sqlite3
